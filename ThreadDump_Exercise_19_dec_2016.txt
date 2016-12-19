@@ -1,0 +1,242 @@
+Thread Dump Exercise
+--------------------
+
+
+___________________________
+Steps Performed
+---------------------------
+
+1) Running from command liine.
+
+javac -d . DeadlockCustom.javac
+
+	- folder / sub folders will be created by above command.
+
+2) Run java program
+
+java trn.examples.DeadlockCustom
+
+	- Program might go into deadlock.
+	
+3) If program is deadlocked, run following commands on another command prompt.
+
+jps -v
+
+	- jps command will give process ids of all java processes, out of which one would be process corresponding to DeadlockCustom class.
+
+jstack pid
+
+	- jstack will provide the detailed jvm logs for the DeadCustom process.
+
+4) In log attached below, we can find the text " Found 1 deadlock".
+
+
+
+___________________________
+GeneratedLogs
+---------------------------
+
+D:\Sapient\work\workspaces\Multithreading\src\trn\examples>jps -v
+9348 DeadlockCustom
+2428  -Dosgi.requiredJavaVersion=1.8 -XX:+UseG1GC -XX:+UseStringDeduplication -D
+osgi.requiredJavaVersion=1.8 -Dosgi.requiredJavaVersion=1.8 -Dosgi.requiredJavaV
+ersion=1.8 -Xms256m -Xmx1024m
+7436 Jps -Dapplication.home=C:\Program Files\Java\jdk1.8.0_101 -Xms8m
+
+D:\Sapient\work\workspaces\Multithreading\src\trn\examples>jstack 9348
+2016-12-19 13:19:08
+Full thread dump Java HotSpot(TM) 64-Bit Server VM (25.101-b13 mixed mode):
+
+"DestroyJavaVM" #13 prio=5 os_prio=0 tid=0x000000000037d800 nid=0x1f38 waiting o
+n condition [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"Thread2" #12 prio=5 os_prio=0 tid=0x000000001d710000 nid=0x22c waiting for moni
+tor entry [0x000000001cf3f000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at trn.examples.Thread2.run(DeadlockCustom.java:65)
+        - waiting to lock <0x000000076c478b48> (a java.lang.String)
+        - locked <0x000000076c478b80> (a java.lang.String)
+        at java.lang.Thread.run(Thread.java:745)
+
+"Thread1" #11 prio=5 os_prio=0 tid=0x000000001d70f800 nid=0x2678 waiting for mon
+itor entry [0x000000001dfff000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at trn.examples.Thread1.run(DeadlockCustom.java:43)
+        - waiting to lock <0x000000076c478b80> (a java.lang.String)
+        - locked <0x000000076c478b48> (a java.lang.String)
+        at java.lang.Thread.run(Thread.java:745)
+
+"Service Thread" #9 daemon prio=9 os_prio=0 tid=0x000000001d6e2800 nid=0x1a6c ru
+nnable [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"C1 CompilerThread2" #8 daemon prio=9 os_prio=2 tid=0x000000001d671000 nid=0x271
+8 waiting on condition [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"C2 CompilerThread1" #7 daemon prio=9 os_prio=2 tid=0x000000001d670800 nid=0xd98
+ waiting on condition [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"C2 CompilerThread0" #6 daemon prio=9 os_prio=2 tid=0x000000001bc28000 nid=0x25c
+0 waiting on condition [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"Attach Listener" #5 daemon prio=5 os_prio=2 tid=0x000000001bc23800 nid=0x15fc w
+aiting on condition [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"Signal Dispatcher" #4 daemon prio=9 os_prio=2 tid=0x000000001bc22000 nid=0xec8
+runnable [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"Finalizer" #3 daemon prio=8 os_prio=1 tid=0x000000001bc09000 nid=0x2708 in Obje
+ct.wait() [0x000000001d0bf000]
+   java.lang.Thread.State: WAITING (on object monitor)
+        at java.lang.Object.wait(Native Method)
+        - waiting on <0x000000076c408ee0> (a java.lang.ref.ReferenceQueue$Lock)
+        at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:143)
+        - locked <0x000000076c408ee0> (a java.lang.ref.ReferenceQueue$Lock)
+        at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:164)
+        at java.lang.ref.Finalizer$FinalizerThread.run(Finalizer.java:209)
+
+"Reference Handler" #2 daemon prio=10 os_prio=2 tid=0x000000001bbc1800 nid=0x1da
+0 in Object.wait() [0x000000001ce1f000]
+   java.lang.Thread.State: WAITING (on object monitor)
+        at java.lang.Object.wait(Native Method)
+        - waiting on <0x000000076c406b50> (a java.lang.ref.Reference$Lock)
+        at java.lang.Object.wait(Object.java:502)
+        at java.lang.ref.Reference.tryHandlePending(Reference.java:191)
+        - locked <0x000000076c406b50> (a java.lang.ref.Reference$Lock)
+        at java.lang.ref.Reference$ReferenceHandler.run(Reference.java:153)
+
+"VM Thread" os_prio=2 tid=0x000000001bbb9800 nid=0x424 runnable
+
+"GC task thread#0 (ParallelGC)" os_prio=0 tid=0x0000000001f5c000 nid=0x598 runna
+ble
+
+"GC task thread#1 (ParallelGC)" os_prio=0 tid=0x0000000001f5d800 nid=0x1e88 runn
+able
+
+"GC task thread#2 (ParallelGC)" os_prio=0 tid=0x0000000001f5f000 nid=0x1d50 runn
+able
+
+"GC task thread#3 (ParallelGC)" os_prio=0 tid=0x0000000001f60800 nid=0x2254 runn
+able
+
+"VM Periodic Task Thread" os_prio=2 tid=0x000000001d6f2000 nid=0x18c4 waiting on
+ condition
+
+JNI global references: 5
+
+
+Found one Java-level deadlock:
+=============================
+"Thread2":
+  waiting to lock monitor 0x000000001bbc86a8 (object 0x000000076c478b48, a java.
+lang.String),
+  which is held by "Thread1"
+"Thread1":
+  waiting to lock monitor 0x000000001bbc5e18 (object 0x000000076c478b80, a java.
+lang.String),
+  which is held by "Thread2"
+
+Java stack information for the threads listed above:
+===================================================
+"Thread2":
+        at trn.examples.Thread2.run(DeadlockCustom.java:65)
+        - waiting to lock <0x000000076c478b48> (a java.lang.String)
+        - locked <0x000000076c478b80> (a java.lang.String)
+        at java.lang.Thread.run(Thread.java:745)
+"Thread1":
+        at trn.examples.Thread1.run(DeadlockCustom.java:43)
+        - waiting to lock <0x000000076c478b80> (a java.lang.String)
+        - locked <0x000000076c478b48> (a java.lang.String)
+        at java.lang.Thread.run(Thread.java:745)
+
+Found 1 deadlock.
+
+
+D:\Sapient\work\workspaces\Multithreading\src\trn\examples>	
+
+
+
+
+
+
+___________________________
+DeadlockCustom Program
+---------------------------
+
+package trn.examples;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class DeadlockCustom {
+
+	public final static Logger LOGGER = Logger.getLogger(DeadlockCustom.class.getName());
+	
+	public static void main(String... args) {
+		
+		LOGGER.log(Level.ALL, "Main started...");
+		
+		String lock1 = "Lock1";
+		String lock2 = "Lock2";
+		Thread thread1 = new Thread(new Thread1(lock1, lock2), "Thread1");
+		Thread thread2 = new Thread(new Thread2(lock1, lock2), "Thread2");
+		
+		thread1.start();
+		thread2.start();
+		
+		LOGGER.log(Level.ALL, "Main ended...");
+	}
+}
+
+class Thread1 implements Runnable {
+	
+	public final static Logger LOGGER = Logger.getLogger(Thread1.class.getName());
+	
+	Object lock1, lock2;
+	
+	Thread1(Object lock1, Object lock2) {
+		this.lock1 = lock1;
+		this.lock2 = lock2;
+	}
+	
+	public void run() {
+
+		LOGGER.log(Level.ALL, "Thread " + Thread.currentThread().getName());
+		synchronized(lock1) {
+			System.out.println("1. Thread " + Thread.currentThread().getName());
+			synchronized(lock2) {
+				System.out.println("2. Thread " + Thread.currentThread().getName());
+			}
+		}
+	}
+}
+
+class Thread2 implements Runnable {
+	
+	public final static Logger LOGGER = Logger.getLogger(Thread2.class.getName());
+	
+	Object lock1, lock2;
+	
+	Thread2(Object lock1, Object lock2) {
+		this.lock1 = lock1;
+		this.lock2 = lock2;
+	}
+	
+	public void run() {
+		LOGGER.log(Level.ALL, "Thread " + Thread.currentThread().getName());
+		synchronized(lock2) {
+			System.out.println("1. Thread " + Thread.currentThread().getName());
+			synchronized(lock1) {
+				System.out.println("2. Thread " + Thread.currentThread().getName());
+			}
+		}
+		
+		
+	}
+}
